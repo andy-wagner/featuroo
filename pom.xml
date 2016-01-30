@@ -14,11 +14,14 @@
         <version>1.3.2.RELEASE</version>
     </parent>
 
-    <!-- Add typical dependencies for a uk.co.creativefootprint.sixpack4j.application.web uk.co.creativefootprint.sixpack4j.application -->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.creativefootprint</groupId>
+            <artifactId>sixpack4j-lib</artifactId>
         </dependency>
     </dependencies>
 
