@@ -23,6 +23,11 @@
             <groupId>uk.co.creativefootprint</groupId>
             <artifactId>sixpack4j-lib</artifactId>
         </dependency>
+        <dependency>
+            <groupId>uk.co.creativefootprint</groupId>
+            <artifactId>sixpack4j-lib</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <!-- Package as an executable jar -->
