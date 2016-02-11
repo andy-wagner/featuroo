@@ -38,7 +38,7 @@ public class ExperimentsController {
     public ResponseEntity<ParticipationResultView> participate(@RequestParam("experiment") String experiment,
                                                                @RequestParam("alternatives") String[] alternatives,
                                                                @RequestParam("client_id") String clientId,
-                                                               @RequestParam("traffic_fraction") double trafficFraction) {
+                                                               @RequestParam(name = "traffic_fraction", required = false) double trafficFraction) {
 
         Experiment existing = experimentService.getExperiment(experiment);
         if(existing == null)
@@ -63,7 +63,7 @@ public class ExperimentsController {
     @RequestMapping(method = RequestMethod.GET, path="convert")
     public ResponseEntity<ConversionResultView> convert(@RequestParam("experiment") String experiment,
                                                             @RequestParam("client_id") String clientId,
-                                                            @RequestParam("kpi") String kpi) {
+                                                            @RequestParam(name = "kpi", required = false) String kpi) {
 
         Alternative alternative = experimentService.convert(experiment, new Client(clientId),new Date());
 
