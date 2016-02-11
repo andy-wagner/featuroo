@@ -2,21 +2,20 @@ package uk.co.creativefootprint.sixpack4j.view;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ParticipationView {
+public class ConversionResultView {
 
     AlternativeView alternative;
     ExperimentView experiment;
+    ConversionView conversion;
 
     @JsonProperty("client_id")
     String clientId;
 
-    String status;
-
-    public ParticipationView(AlternativeView alternative, ExperimentView experiment, String clientId, String status) {
+    public ConversionResultView(AlternativeView alternative, ExperimentView experiment, ConversionView conversion, String clientId) {
         this.alternative = alternative;
         this.experiment = experiment;
+        this.conversion = conversion;
         this.clientId = clientId;
-        this.status = status;
     }
 
     public AlternativeView getAlternative() {
@@ -27,11 +26,11 @@ public class ParticipationView {
         return experiment;
     }
 
-    public String getClientId() {
-        return clientId;
+    public ConversionView getConversion() {
+        return conversion;
     }
 
-    public String getStatus() {
-        return status;
+    public String getClientId() {
+        return clientId;
     }
 }

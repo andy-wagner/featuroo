@@ -6,17 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import uk.co.creativefootprint.sixpack4j.model.Client;
-import uk.co.creativefootprint.sixpack4j.model.Experiment;
-import uk.co.creativefootprint.sixpack4j.model.ParticipationResult;
-import uk.co.creativefootprint.sixpack4j.model.UniformChoiceStrategy;
+import uk.co.creativefootprint.sixpack4j.model.*;
 import uk.co.creativefootprint.sixpack4j.repository.ConversionRepository;
 import uk.co.creativefootprint.sixpack4j.repository.ExperimentRepository;
 import uk.co.creativefootprint.sixpack4j.repository.ParticipantRepository;
 import uk.co.creativefootprint.sixpack4j.service.ExperimentService;
-import uk.co.creativefootprint.sixpack4j.view.AlternativeView;
-import uk.co.creativefootprint.sixpack4j.view.ExperimentView;
-import uk.co.creativefootprint.sixpack4j.view.ParticipationView;
+import uk.co.creativefootprint.sixpack4j.view.*;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -40,10 +35,10 @@ public class ExperimentsController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path="participate")
-    public ResponseEntity<ParticipationView> participate(@RequestParam("experiment") String experiment,
-                                                  @RequestParam("alternatives") String[] alternatives,
-                                                  @RequestParam("client_id") String clientId,
-                                                  @RequestParam("traffic_fraction") double trafficFraction) {
+    public ResponseEntity<ParticipationResultView> participate(@RequestParam("experiment") String experiment,
+                                                               @RequestParam("alternatives") String[] alternatives,
+                                                               @RequestParam("client_id") String clientId,
+                                                               @RequestParam("traffic_fraction") double trafficFraction) {
 
         Experiment existing = experimentService.getExperiment(experiment);
         if(existing == null)
@@ -55,14 +50,31 @@ public class ExperimentsController {
 
         ParticipationResult result = experimentService.participate(experiment, new Client(clientId),new Date());
 
-        ParticipationView view =  new ParticipationView(
+        ParticipationResultView view =  new ParticipationResultView(
                 new AlternativeView(result.getAlternative().getName()),
                 new ExperimentView(experiment),
                 clientId,
                 "ok"
         );
 
-        return new ResponseEntity<ParticipationView>(view, HttpStatus.OK);
+        return new ResponseEntity<ParticipationResultView>(view, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path="convert")
+    public ResponseEntity<ConversionResultView> convert(@RequestParam("experiment") String experiment,
+                                                            @RequestParam("client_id") String clientId,
+                                                            @RequestParam("kpi") String kpi) {
+
+        Alternative alternative = experimentService.convert(experiment, new Client(clientId),new Date());
+
+        ConversionResultView view =  new ConversionResultView(
+                new AlternativeView(alternative.getName()),
+                new ExperimentView(experiment),
+                new ConversionView(null, kpi),
+                clientId
+        );
+
+        return new ResponseEntity<ConversionResultView>(view, HttpStatus.OK);
     }
 
 }
