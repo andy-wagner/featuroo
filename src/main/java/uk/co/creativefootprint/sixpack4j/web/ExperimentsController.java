@@ -65,7 +65,7 @@ public class ExperimentsController {
                                                             @RequestParam("client_id") String clientId,
                                                             @RequestParam(name = "kpi", required = false) String kpi) {
 
-        Alternative alternative = experimentService.convert(experiment, new Client(clientId),new Date());
+        Alternative alternative = experimentService.convert(experiment, new Client(clientId),new Date(), kpi);
 
         ConversionResultView view =  new ConversionResultView(
                 new AlternativeView(alternative.getName()),
