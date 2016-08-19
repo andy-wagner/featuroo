@@ -3,19 +3,19 @@ package uk.co.creativefootprint.sixpack4j.view;
 public class ConversionView {
 
     String value;
-    String kpi;
+    String goal;
 
-    public ConversionView(String value, String kpi) {
+    public ConversionView(String value, String goal) {
 
         this.value = value;
-        this.kpi = kpi;
+        this.goal = goal;
     }
 
     public String getValue() {
         return value;
     }
 
-    public String getKpi() {
-        return kpi;
+    public String getGoal() {
+        return goal;
     }
 }
