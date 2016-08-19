@@ -1,15 +1,15 @@
-package uk.co.creativefootprint.sixpack4j.web;
+package uk.co.creativefootprint.featuroo.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uk.co.creativefootprint.sixpack4j.exception.ExperimentNotFoundException;
-import uk.co.creativefootprint.sixpack4j.model.*;
-import uk.co.creativefootprint.sixpack4j.repository.ConversionRepository;
-import uk.co.creativefootprint.sixpack4j.repository.ExperimentRepository;
-import uk.co.creativefootprint.sixpack4j.repository.ParticipantRepository;
-import uk.co.creativefootprint.sixpack4j.service.ExperimentService;
-import uk.co.creativefootprint.sixpack4j.view.*;
+import uk.co.creativefootprint.featuroo.view.*;
+import uk.co.creativefootprint.featuroo.exception.ExperimentNotFoundException;
+import uk.co.creativefootprint.featuroo.model.*;
+import uk.co.creativefootprint.featuroo.repository.ConversionRepository;
+import uk.co.creativefootprint.featuroo.repository.ExperimentRepository;
+import uk.co.creativefootprint.featuroo.repository.ParticipantRepository;
+import uk.co.creativefootprint.featuroo.service.ExperimentService;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -21,7 +21,7 @@ public class ExperimentsController {
     ExperimentService experimentService;
 
     private static String DB_DRIVER="org.h2.Driver";
-    private static String DB_CONNECTION="jdbc:h2:~/sixpack-test";
+    private static String DB_CONNECTION="jdbc:h2:~/featuroo-test";
     private static String DB_USER="";
     private static String DB_PASSWORD="";
 

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>uk.co.creativefootprint</groupId>
-    <artifactId>sixpack4j</artifactId>
+    <artifactId>featuroo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -21,11 +21,11 @@
         </dependency>
         <dependency>
             <groupId>uk.co.creativefootprint</groupId>
-            <artifactId>sixpack4j-lib</artifactId>
+            <artifactId>featuroo-lib</artifactId>
         </dependency>
         <dependency>
             <groupId>uk.co.creativefootprint</groupId>
-            <artifactId>sixpack4j-lib</artifactId>
+            <artifactId>featuroo-lib</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

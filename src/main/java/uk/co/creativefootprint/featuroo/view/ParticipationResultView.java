@@ -1,4 +1,4 @@
-package uk.co.creativefootprint.sixpack4j.view;
+package uk.co.creativefootprint.featuroo.view;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,4 +1,4 @@
-package uk.co.creativefootprint.sixpack4j.application;
+package uk.co.creativefootprint.featuroo.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @ComponentScan(basePackages = "uk.co.creativefootprint")
 @EnableAutoConfiguration
-public class SixPackApplication {
+public class FeaturooApplication {
 
     @RequestMapping("/")
     String home() {
@@ -17,6 +17,6 @@ public class SixPackApplication {
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(SixPackApplication.class, args);
+        SpringApplication.run(FeaturooApplication.class, args);
     }
 }
