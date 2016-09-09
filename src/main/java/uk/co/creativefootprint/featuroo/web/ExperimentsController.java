@@ -98,7 +98,6 @@ public class ExperimentsController {
         return new ResponseEntity<ParticipationResultView>(view, HttpStatus.OK);
     }
 
-
     /*
      Here for backwards compatibility with the sixpack api. Consider using the similar POST
      /convert endpoint
@@ -108,25 +107,36 @@ public class ExperimentsController {
             @PathVariable("experiment") String experiment,
             @RequestParam("client_id") String clientId,
             @RequestParam(name = "kpi", required = false) String kpi) {
-        return convert(experiment, clientId, kpi, kpi);
+        Alternative alternative = experimentService.convert(experiment,
+                new Client(clientId),
+                new Date(),
+                new Goal(kpi));
+
+        ConversionResultView view =  new ConversionResultView(
+                new AlternativeView(alternative.getName()),
+                new ExperimentView(experiment),
+                new ConversionViewKpi(null, kpi),
+                clientId
+        );
+
+        return new ResponseEntity<ConversionResultView>(view, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, path="convert/{experiment}")
     public ResponseEntity<ConversionResultView> convert(
             @PathVariable("experiment") String experiment,
-            @RequestParam("client_id") String clientId,
-            @RequestParam(name = "kpi", required = false) String kpi,
-            @RequestParam(name = "goal", required = false) String goal) {
+            @RequestBody ConversionClientView conversionClientView) {
 
-        goal = goal != null ? goal : kpi;
-
-        Alternative alternative = experimentService.convert(experiment, new Client(clientId), new Date(), new Goal(goal));
+        Alternative alternative = experimentService.convert(experiment,
+                        new Client(conversionClientView.getClientId()),
+                        new Date(),
+                        new Goal(conversionClientView.getGoal()));
 
         ConversionResultView view =  new ConversionResultView(
                 new AlternativeView(alternative.getName()),
                 new ExperimentView(experiment),
-                new ConversionView(null, goal),
-                clientId
+                new ConversionView(null, conversionClientView.getGoal()),
+                conversionClientView.getClientId()
         );
 
         return new ResponseEntity<ConversionResultView>(view, HttpStatus.OK);
