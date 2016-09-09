@@ -1,5 +1,6 @@
 package uk.co.creativefootprint.featuroo.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,10 @@ import java.util.Date;
 @RequestMapping("/experiments")
 public class ExperimentsController {
 
+    @Autowired
     ExperimentService experimentService;
 
     public ExperimentsController(){
-    }
-
-    public ExperimentsController(ExperimentService experimentService){
-        this.experimentService = experimentService;
     }
 
     @RequestMapping(method = RequestMethod.POST, path="")
@@ -54,7 +52,7 @@ public class ExperimentsController {
             @RequestParam("experiment") String experiment,
             @RequestParam("alternatives") String[] alternatives,
             @RequestParam("client_id") String clientId,
-            @RequestParam(name = "traffic_fraction", required = false) double trafficFraction) {
+            @RequestParam(name = "traffic_fraction", required = false) Double trafficFraction) {
 
         Experiment existing = experimentService.getExperiment(experiment);
 

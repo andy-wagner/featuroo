@@ -22,8 +22,10 @@ public class FeaturooApplication {
     @Bean
     public ExperimentService getExperimentService(ExperimentRepository experimentRepository,
                                                   ParticipantRepository participantRepository,
-                                                  ConversionRepository conversionRepository){
-        return new ExperimentService(experimentRepository,participantRepository,conversionRepository);
+                                                  ConversionRepository conversionRepository,
+                                                  AppConfig appConfig){
+        return new ExperimentService(experimentRepository,participantRepository,
+                                     conversionRepository, appConfig.getDefaultTrafficFraction());
     }
 
     @Bean ExperimentRepository getExperimentRepository(DbConfig dbConfig){
