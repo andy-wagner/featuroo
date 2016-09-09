@@ -3,6 +3,7 @@ package uk.co.creativefootprint.featuroo.web;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.co.creativefootprint.featuroo.application.DbConfig;
 import uk.co.creativefootprint.featuroo.view.*;
 import uk.co.creativefootprint.featuroo.exception.ExperimentNotFoundException;
 import uk.co.creativefootprint.featuroo.model.*;
@@ -20,16 +21,11 @@ public class ExperimentsController {
 
     ExperimentService experimentService;
 
-    private static String DB_DRIVER="org.h2.Driver";
-    private static String DB_CONNECTION="jdbc:h2:~/featuroo-test";
-    private static String DB_USER="";
-    private static String DB_PASSWORD="";
-
     public ExperimentsController(){
-        experimentService = new ExperimentService(
-                new ExperimentRepository(DB_DRIVER,DB_CONNECTION,DB_USER,DB_PASSWORD),
-                new ParticipantRepository(DB_DRIVER,DB_CONNECTION,DB_USER,DB_PASSWORD),
-                new ConversionRepository(DB_DRIVER,DB_CONNECTION,DB_USER,DB_PASSWORD));
+    }
+
+    public ExperimentsController(ExperimentService experimentService){
+        this.experimentService = experimentService;
     }
 
     @RequestMapping(method = RequestMethod.POST, path="")
@@ -50,7 +46,7 @@ public class ExperimentsController {
 
 
     /*
-     Here for backwards compatibility with the sixpack api. Consider posting to the
+     Here for backwards compatibility with the sixpack api. Consider instead posting to the
      create endpoint first and then participating.
      */
     @RequestMapping(method = RequestMethod.GET, path="participate")
