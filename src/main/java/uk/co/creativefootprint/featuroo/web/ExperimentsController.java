@@ -4,13 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uk.co.creativefootprint.featuroo.application.DbConfig;
 import uk.co.creativefootprint.featuroo.view.*;
 import uk.co.creativefootprint.featuroo.exception.ExperimentNotFoundException;
 import uk.co.creativefootprint.featuroo.model.*;
-import uk.co.creativefootprint.featuroo.repository.ConversionRepository;
-import uk.co.creativefootprint.featuroo.repository.ExperimentRepository;
-import uk.co.creativefootprint.featuroo.repository.ParticipantRepository;
 import uk.co.creativefootprint.featuroo.service.ExperimentService;
 
 import java.util.Arrays;
@@ -27,19 +23,17 @@ public class ExperimentsController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path="")
-    public ResponseEntity<String> create(
-            @RequestParam("experiment") String experiment,
-            @RequestParam("alternatives") String[] alternatives,
-            @RequestParam("client_id") String clientId,
-            @RequestParam(name = "traffic_fraction", required = false) double trafficFraction) {
+    public ResponseEntity<ExperimentView> create(
+            @RequestBody ExperimentView experimentView) {
 
-        Experiment e = experimentService.createExperiment(experiment,
-                experiment,
-                Arrays.asList(alternatives),
-                trafficFraction,
+        Experiment e = experimentService.createExperiment(experimentView.getName(),
+                experimentView.getName(),
+                experimentView.getAlternatives(),
+                experimentView.getTrafficFraction(),
                 new UniformChoiceStrategy());
 
-        return new ResponseEntity<String>(e.getName(), HttpStatus.CREATED);
+        return new ResponseEntity<ExperimentView>(new ExperimentView().withName(e.getName()),
+                                                  HttpStatus.CREATED);
     }
 
 
@@ -67,7 +61,7 @@ public class ExperimentsController {
 
         ParticipationResultView view =  new ParticipationResultView(
                 new AlternativeView(result.getAlternative().getName()),
-                new ExperimentView(experiment),
+                new ExperimentView().withName(experiment),
                 clientId,
                 "ok"
         );
@@ -88,7 +82,7 @@ public class ExperimentsController {
 
         ParticipationResultView view =  new ParticipationResultView(
                 new AlternativeView(result.getAlternative().getName()),
-                new ExperimentView(experiment),
+                new ExperimentView().withName(experiment),
                 clientId,
                 "ok"
         );
@@ -112,7 +106,7 @@ public class ExperimentsController {
 
         ConversionResultView view =  new ConversionResultView(
                 new AlternativeView(alternative.getName()),
-                new ExperimentView(experiment),
+                new ExperimentView().withName(experiment),
                 new ConversionViewKpi(null, kpi),
                 clientId
         );
@@ -132,7 +126,7 @@ public class ExperimentsController {
 
         ConversionResultView view =  new ConversionResultView(
                 new AlternativeView(alternative.getName()),
-                new ExperimentView(experiment),
+                new ExperimentView().withName(experiment),
                 new ConversionView(null, conversionClientView.getGoal()),
                 conversionClientView.getClientId()
         );

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppConfig {
 
-    @Value("${defaultTrafficFraction}")
+    @Value("${featuroo.defaultTrafficFraction}")
     private double defaultTrafficFraction;
 
     public double getDefaultTrafficFraction() {
