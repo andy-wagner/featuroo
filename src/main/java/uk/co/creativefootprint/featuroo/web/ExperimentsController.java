@@ -72,18 +72,21 @@ public class ExperimentsController {
     @RequestMapping(method = RequestMethod.POST, path="participate/{experiment}")
     public ResponseEntity<ParticipationResultView> participate(
             @PathVariable("experiment") String experiment,
-            @RequestParam("client_id") String clientId) {
+            @RequestBody ClientView clientView) {
 
         Experiment existing = experimentService.getExperiment(experiment);
         if(existing == null)
             throw new ExperimentNotFoundException(experiment);
 
-        ParticipationResult result = experimentService.participate(experiment, new Client(clientId),new Date());
+        ParticipationResult result = experimentService.participate(
+                experiment,
+                new Client(clientView.getClientId()),
+                new Date());
 
         ParticipationResultView view =  new ParticipationResultView(
                 new AlternativeView(result.getAlternative().getName()),
                 new ExperimentView().withName(experiment),
-                clientId,
+                clientView.getClientId(),
                 "ok"
         );
 
@@ -132,6 +135,13 @@ public class ExperimentsController {
         );
 
         return new ResponseEntity<ConversionResultView>(view, HttpStatus.OK);
+    }
+
+
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Experiment does not exist")
+    @ExceptionHandler(ExperimentNotFoundException.class)
+    public void badRequest() {
+        // Nothing to do
     }
 
 }
